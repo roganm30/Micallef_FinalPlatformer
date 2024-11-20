@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    public float jump;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,13 +49,38 @@ public class PlayerController : MonoBehaviour
             return false;
         }
     }
+
     public bool IsGrounded()
     {
-        return true;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.up, 0.67f);
+        if (hit)
+        {
+            Debug.Log("Hit Something : " + hit.collider.name);
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                rb.AddForce(new Vector2(rb.velocity.x, jump));
+            }
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
     public FacingDirection GetFacingDirection()
     {
-        return FacingDirection.left;
+        if (move < 0)
+        {
+            return FacingDirection.left;
+        }
+        else
+        {
+            return FacingDirection.right;
+        }
+        
     }
 }
