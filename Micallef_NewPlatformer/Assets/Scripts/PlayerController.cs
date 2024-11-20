@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
     public float gravity;
     public float initialJumpVelocity;
 
+    public float posTerminalSpeed = 10f;
+    public float negTerminalSpeed = -10f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,21 +35,15 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //The input from the player needs to be determined and then passed in the to the MovementUpdate which should
-        //manage the actual movement of the character.
         
-
     }
 
     private void FixedUpdate()
     {
+        //The input from the player needs to be determined and then passed in the to the MovementUpdate which should
+        //manage the actual movement of the character.
         Vector2 playerInput = new Vector2();
         MovementUpdate(playerInput);
-
-        gravity = -2 * apexHeight / Mathf.Pow(apexTime, 2);
-        initialJumpVelocity = 2 * (apexHeight / apexTime);
-
-        rb.AddForce(new Vector2(0, gravity));
     }
 
     private void MovementUpdate(Vector2 playerInput)
@@ -54,6 +51,24 @@ public class PlayerController : MonoBehaviour
         move = Input.GetAxis("Horizontal");
 
         rb.velocity = new Vector2(move * speed * Time.fixedDeltaTime, rb.velocity.y);
+
+        gravity = -2 * apexHeight / Mathf.Pow(apexTime, 2);
+        initialJumpVelocity = 2 * (apexHeight / apexTime);
+
+        rb.AddForce(new Vector2(0, gravity));
+
+        if (rb.velocity.y >= posTerminalSpeed || rb.velocity.y <= negTerminalSpeed)
+        {
+            gravity = -9.8f;
+        }
+
+        Debug.Log("positive terminal speed is : " + posTerminalSpeed);
+
+        Debug.Log("negative terminal speed is : " + negTerminalSpeed);
+
+        Debug.Log(rb.velocity.y);
+
+        Debug.Log(gravity);
     }
 
     public bool IsWalking()
