@@ -23,8 +23,13 @@ public class PlayerController : MonoBehaviour
     public float gravity;
     public float initialJumpVelocity;
 
+
     public float posTerminalSpeed = 10f;
     public float negTerminalSpeed = -10f;
+
+
+    public float coyoteTime = 0.5f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -62,13 +67,13 @@ public class PlayerController : MonoBehaviour
             gravity = -9.8f;
         }
 
-        Debug.Log("positive terminal speed is : " + posTerminalSpeed);
+        //Debug.Log("positive terminal speed is : " + posTerminalSpeed);
 
-        Debug.Log("negative terminal speed is : " + negTerminalSpeed);
+        //Debug.Log("negative terminal speed is : " + negTerminalSpeed);
 
-        Debug.Log(rb.velocity.y);
+        //Debug.Log(rb.velocity.y);
 
-        Debug.Log(gravity);
+        //Debug.Log(gravity);
     }
 
     public bool IsWalking()
@@ -85,7 +90,9 @@ public class PlayerController : MonoBehaviour
 
     public bool IsGrounded()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.up, 0.67f);
+        RaycastHit2D hit = Physics2D.BoxCast(transform.position, new Vector2(2, 2), 180f, -transform.up, 0.67f);
+
+        // RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.up, 0.67f);
         if (hit)
         {
             Debug.Log("Hit Something : " + hit.collider.name);
