@@ -9,10 +9,15 @@ public class PlayerController : MonoBehaviour
         left, right
     }
 
+    public float speed = 5f;
+    public float move;
+
+    private Rigidbody2D rb;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -26,7 +31,9 @@ public class PlayerController : MonoBehaviour
 
     private void MovementUpdate(Vector2 playerInput)
     {
+        move = Input.GetAxis("Horizontal");
 
+        rb.velocity = new Vector2(move * speed, rb.velocity.y);
     }
 
     public bool IsWalking()
