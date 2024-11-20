@@ -38,7 +38,14 @@ public class PlayerController : MonoBehaviour
 
     public bool IsWalking()
     {
-        return false;
+        if (move != 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     public bool IsGrounded()
     {
