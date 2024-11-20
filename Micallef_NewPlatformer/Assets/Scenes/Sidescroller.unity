@@ -1697,8 +1697,8 @@ MonoBehaviour:
   move: 0
   jump: 350
   apexHeight: 175
-  apexTime: 5.95
-  gravity: -9.8
+  apexTime: 5
+  gravity: 0
   initialJumpVelocity: 0
 --- !u!4 &1433354315
 Transform:

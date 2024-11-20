@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public float apexHeight;
     public float apexTime;
 
-    public float gravity = -9.8f;
+    public float gravity;
     public float initialJumpVelocity;
 
     // Start is called before the first frame update
