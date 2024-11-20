@@ -16,6 +16,13 @@ public class PlayerController : MonoBehaviour
 
     public float jump;
 
+
+    public float apexHeight;
+    public float apexTime;
+
+    public float gravity = -9.8f;
+    public float initialJumpVelocity;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,15 +34,26 @@ public class PlayerController : MonoBehaviour
     {
         //The input from the player needs to be determined and then passed in the to the MovementUpdate which should
         //manage the actual movement of the character.
+        
+
+    }
+
+    private void FixedUpdate()
+    {
         Vector2 playerInput = new Vector2();
         MovementUpdate(playerInput);
+
+        gravity = -2 * apexHeight / Mathf.Pow(apexTime, 2);
+        initialJumpVelocity = 2 * (apexHeight / apexTime);
+
+        rb.AddForce(new Vector2(0, gravity));
     }
 
     private void MovementUpdate(Vector2 playerInput)
     {
         move = Input.GetAxis("Horizontal");
 
-        rb.velocity = new Vector2(move * speed, rb.velocity.y);
+        rb.velocity = new Vector2(move * speed * Time.fixedDeltaTime, rb.velocity.y);
     }
 
     public bool IsWalking()
@@ -57,9 +75,9 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Hit Something : " + hit.collider.name);
 
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                rb.AddForce(new Vector2(rb.velocity.x, jump));
+                rb.AddForce(new Vector2(rb.velocity.x, initialJumpVelocity * 7f));
             }
 
             return true;
