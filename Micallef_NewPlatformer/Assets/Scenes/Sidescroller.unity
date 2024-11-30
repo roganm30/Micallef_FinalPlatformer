@@ -1702,6 +1702,8 @@ MonoBehaviour:
   initialJumpVelocity: 0
   posTerminalSpeed: 10
   negTerminalSpeed: -10
+  coyoteTime: 0.5
+  dashSpeed: 2
 --- !u!4 &1433354315
 Transform:
   m_ObjectHideFlags: 0

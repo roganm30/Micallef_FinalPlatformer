@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
 
     public float coyoteTime = 0.5f;
 
+    public float dashSpeed;
+
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +76,14 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(rb.velocity.y);
 
         //Debug.Log(gravity);
+
+        if (Input.GetKey(KeyCode.LeftShift) && move != 0)
+        {
+            rb.velocity = new Vector2(move * speed * dashSpeed * Time.fixedDeltaTime, rb.velocity.y);
+
+            Debug.Log("shift key was hit");
+        }
+
     }
 
     public bool IsWalking()
