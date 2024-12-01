@@ -32,6 +32,9 @@ public class PlayerController : MonoBehaviour
 
     public float dashSpeed;
 
+    public float jumpDelay = 1;
+    float timer;
+
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +45,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        timer += Time.deltaTime; // timer variable adding over time passing
     }
 
     private void FixedUpdate()
@@ -51,6 +54,8 @@ public class PlayerController : MonoBehaviour
         //manage the actual movement of the character.
         Vector2 playerInput = new Vector2();
         MovementUpdate(playerInput);
+
+        Debug.Log(timer);
     }
 
     private void MovementUpdate(Vector2 playerInput)
@@ -103,7 +108,7 @@ public class PlayerController : MonoBehaviour
 
     public bool IsGrounded()
     {
-        RaycastHit2D hit = Physics2D.BoxCast(transform.position, new Vector2(2, 2), 180f, -transform.up, 0.67f);
+        RaycastHit2D hit = Physics2D.BoxCast(transform.position, new Vector2(1, 1), 0f, -transform.up, 0.67f);
 
         // RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.up, 0.67f);
         if (hit)
@@ -112,17 +117,36 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                rb.AddForce(new Vector2(rb.velocity.x, initialJumpVelocity * 7f));
+                rb.AddForce(new Vector2(0, initialJumpVelocity * 7f));
             }
+
+            timer = 0; // if the player/boxcast hits the ground, timer is reset to 0
 
             return true;
         }
         else
         {
-            if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+            // task 2: quick descent
+            if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) // this if statement is placed within the else of the raycast being hit
+                                                                            // this is so that it will only occur if IsGrounded is being marked as false
+                                                                            // it is basically saying that as long as the DownArrow or S keys are held
+                                                                            // the if statement will occur
             {
-                rb.AddForce(new Vector2(0, -1));
+                rb.AddForce(new Vector2(0, -1)); // the if statement is giving the player character a bit of a push by adding force
+                                                 // the force is (0, -1) because it is adjusting the y position (x, y) and it is pushing down (negative)
+                                                 // if the force were to be (0, 1) then the player would start to fly away upward
             }
+
+            // task 3 ver.2: rocket boots
+            if (Input.GetKeyDown(KeyCode.Space) && timer < jumpDelay) // the jump delay is set to 1, this code will only run if both conditions are met
+                                                                      // the space bar is pressed, and the timer (which counts real time) is under 1
+                                                                      // because the timer resets when IsGrounded is true, this forces it to be a quick
+                                                                      // double jump mechanic rather than something that can be spammed
+            {
+                rb.AddForce(new Vector2(0, initialJumpVelocity * 5f)); // when these conditions are met, force is added to the player
+                                                                       // much like the initial jump mechanic, but a bit weaker to feel more natural
+            }
+
             return false;
         }
 
