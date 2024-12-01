@@ -77,13 +77,16 @@ public class PlayerController : MonoBehaviour
 
         //Debug.Log(gravity);
 
-        if (Input.GetKey(KeyCode.LeftShift) && move != 0)
+        // task 1: dash mechanic
+        if (Input.GetKey(KeyCode.LeftShift) && move != 0) // if the left shift key is pressed AND the move value does not equal 0
         {
-            rb.velocity = new Vector2(move * speed * dashSpeed * Time.fixedDeltaTime, rb.velocity.y);
+            rb.velocity = new Vector2(move * speed * dashSpeed * Time.fixedDeltaTime, rb.velocity.y); // takes the movement code i used previously and
+                                                                                                      // added the multiplication of dashSpeed
+                                                                                                      // this is flawed right now because the player can
+                                                                                                      // hold it indefinitely :,D
 
-            Debug.Log("shift key was hit");
+            //Debug.Log("shift key was hit");
         }
-
     }
 
     public bool IsWalking()
@@ -116,6 +119,10 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+            {
+                rb.AddForce(new Vector2(0, -1));
+            }
             return false;
         }
 
