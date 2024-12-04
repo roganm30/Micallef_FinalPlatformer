@@ -1956,6 +1956,7 @@ MonoBehaviour:
   animator: {fileID: 1433354313}
   bodyRenderer: {fileID: 874392359}
   playerController: {fileID: 1433354314}
+  cameraController: {fileID: 0}
 --- !u!61 &1433354317
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1987,7 +1988,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: -0.06189263, y: -0.12616599}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
